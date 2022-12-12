@@ -94,6 +94,8 @@ button {
 
 .show {
   color: #000;
+  transform: rotate3d(0, 1, 0, 360deg);
+  transition: transform .7s ease-in-out;
   background-color: #76CE82;
 }
 
@@ -118,6 +120,10 @@ button {
   border-radius: 5px;
   font-size: var(--font-size-medium);
 }
+.btn__reset:hover, button:hover {
+  cursor: pointer;
+}
+
 
 /* Overlay */
 

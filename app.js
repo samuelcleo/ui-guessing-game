@@ -5,24 +5,39 @@ const phrases = [
     "Dig deep",
     "Hang in there"
 ];
+/* ================================= 
+  High Level Operant Functions
+==================================== */
+let missed;
+function setGame() {
+    // Populate the hearts
+    for (let i = 0; i < 5; i++) {
+        hearts[i].firstElementChild.src="images/liveHeart.png";
+    }
+    // Set the score to 0
+    missed = 0;
+    // Ensure all keys are enabled
+    const disabledKeys = document.querySelectorAll('.chosen');
+    for (let i = 0; i < disabledKeys.length; i++) {
+        disabledKeys[i].disabled = false; 
+        disabledKeys[i].removeAttribute('class');
+    }
+}
 
+
+// Populating the phrase display
 function getRandomPhrase(array) {
     let randomIndex = Math.floor(Math.random() * array.length);
     let phrase = [ ...array[randomIndex] ]
-    return phrase
+    return phrase;
 };
-
-let phrase = getRandomPhrase(phrases);
-const overlay = document.getElementById('overlay'); 
-const start = document.getElementsByClassName('btn__reset')[0];
-// First hide the overlay
-start.addEventListener('click', () => {
-    overlay.style.display = "none";
-});
-
-const displayUl = document.getElementById('phrase');
-// Display all the letters of the phrase
 function displayPhrase() {
+    // Get a phrase
+    const phrase = getRandomPhrase(phrases);
+    // Clear the display first
+    const displayUl = document.getElementById('phrase').children[0];
+    displayUl.innerHTML = "";
+    // Populate the phrase
     for (let i = 0; i < phrase.length; i++) {
         if (phrase[i] !== " ") {
             let letter = phrase[i];
@@ -33,8 +48,8 @@ function displayPhrase() {
         }
     }
 }
-displayPhrase();
 
+// Checking for win or lose conditions
 function checkWin() {
     let correctLetters = document.getElementsByClassName('show');
     
@@ -48,12 +63,22 @@ function checkWin() {
         overlay.firstElementChild.textContent = "You Win!";
     }
 }
+/* ================================= 
+  Game System
+==================================== */
+const overlay = document.getElementById('overlay');
+const start = document.getElementsByClassName('btn__reset')[0];
+// Reveal and start the game
+start.addEventListener('click', () => {
+    overlay.style.display = "none";
+    displayPhrase();
+    setGame();
+});
 
-// Check every hidden letter, show the matching ones, update the score, and take a heart away <3
-// Check if you've won
 const letters = document.getElementsByClassName('letter'); 
 const hearts = document.getElementsByClassName('tries');
-let missed = 0;
+// Check every hidden letter, show the matching ones, update the score, and take a heart away <3
+// Check if you've won
 const checkLetter = (check) => {
     let isCorrect = false;
     // check every letter and show matching ones
@@ -80,8 +105,10 @@ const keyboard = document.getElementById('qwerty');
 // keyboard clicks run the checkLetter function
 keyboard.addEventListener('click', (event) => {
     if ( event.target.tagName === "BUTTON") {
-        let letter = event.target.textContent;
-        checkLetter(letter);
+        let key = event.target;
+            key.className = "chosen";
+            key.disabled = true;
+        checkLetter(key.textContent);
         checkWin()
     }
 });
