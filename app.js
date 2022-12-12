@@ -9,6 +9,7 @@ const phrases = [
   High Level Operant Functions
 ==================================== */
 let missed;
+const displayUl = document.getElementById('phrase').children[0];
 function setGame() {
     // Populate the hearts
     for (let i = 0; i < 5; i++) {
@@ -17,9 +18,9 @@ function setGame() {
     // Set the score to 0
     missed = 0;
     // Ensure all keys are enabled
-    const disabledKeys = document.querySelectorAll('.chosen');
+    const disabledKeys = document.getElementsByClassName;
     for (let i = 0; i < disabledKeys.length; i++) {
-        disabledKeys[i].disabled = false; 
+        disabledKeys[i].disabled = false;
         disabledKeys[i].removeAttribute('class');
     }
 }
@@ -35,15 +36,18 @@ function displayPhrase() {
     // Get a phrase
     const phrase = getRandomPhrase(phrases);
     // Clear the display first
-    const displayUl = document.getElementById('phrase').children[0];
     displayUl.innerHTML = "";
     // Populate the phrase
     for (let i = 0; i < phrase.length; i++) {
-        if (phrase[i] !== " ") {
-            let letter = phrase[i];
-            let li = document.createElement('li');
+        let letter = phrase[i];
+        let li = document.createElement('li');
+        if (letter !== " ") {
                 li.textContent = letter;
                 li.className = "letter"
+            displayUl.appendChild(li);
+        } else {
+                li.textContent = letter;
+                li.className = 'space';
             displayUl.appendChild(li);
         }
     }

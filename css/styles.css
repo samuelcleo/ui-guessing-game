@@ -95,7 +95,7 @@ button {
 .show {
   color: #000;
   transform: rotate3d(0, 1, 0, 360deg);
-  transition: transform .7s ease-in-out;
+  transition: transform .3s ease-in-out;
   background-color: #76CE82;
 }
 
