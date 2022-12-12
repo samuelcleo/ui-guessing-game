@@ -18,7 +18,7 @@ function setGame() {
     // Set the score to 0
     missed = 0;
     // Ensure all keys are enabled
-    const disabledKeys = document.getElementsByClassName('li');
+    const disabledKeys = document.querySelectorAll('.chosen');
     for (let i = 0; i < disabledKeys.length; i++) {
         disabledKeys[i].disabled = false;
         disabledKeys[i].removeAttribute('class');
